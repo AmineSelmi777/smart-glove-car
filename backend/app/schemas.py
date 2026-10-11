@@ -45,4 +45,4 @@ class CarCommand(BaseModel):
     command: Command
     speed: int = Field(default=150, ge=0, le=255)
     reason: str
-    cmd_id: str9
+    cmd_id: str

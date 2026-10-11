@@ -8,7 +8,7 @@
 ## 1. Conventions générales
 
 | Règle | Valeur |
-|---|---|
+|---|---|         
 | Encodage des messages | JSON, UTF-8 |
 | Horodatage `ts` | Entier, millisecondes depuis epoch, UTC |
 | Identifiants | `glove-01`, `car-01`, `light-01` (format `<type>-<NN>`) |
