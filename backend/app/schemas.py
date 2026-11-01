@@ -1,5 +1,6 @@
 from enum import StrEnum
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, conint
+from typing import Literal
 
 
 class Gesture(StrEnum):
@@ -25,7 +26,7 @@ class LightColor(StrEnum):
 
 class Sample(BaseModel):
     dt: int = Field(ge=0)
-    f: list[int] = Field(min_length=5, max_length=5)
+    f: list[conint(ge=0, le=4095)] = Field(min_length=5, max_length=5)
     a: list[float] = Field(min_length=3, max_length=3)
     g: list[float] = Field(min_length=3, max_length=3)
 
@@ -46,3 +47,16 @@ class CarCommand(BaseModel):
     speed: int = Field(default=150, ge=0, le=255)
     reason: str
     cmd_id: str
+
+class LightState(BaseModel):
+    v: int = 1
+    device: str
+    ts: int
+    color: LightColor
+
+
+class DeviceStatus(BaseModel):
+    v: int = 1
+    device: str
+    state: Literal["online", "offline"]
+    ts: int | None = None  # le Last Will n'a pas de ts

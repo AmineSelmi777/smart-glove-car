@@ -11,10 +11,10 @@ BATCH = 10         # échantillons par message (200 ms)
 
 # Valeurs typiques (flex ADC, accélération x/y/z en g) par geste
 PROFILES = {
-    "open_hand":   {"flex": 3200, "acc": (0.10, 0.05, 0.98)},
-    "closed_hand": {"flex": 4100, "acc": (0.10, 0.05, 0.98)},
-    "turn_left":   {"flex": 3200, "acc": (-0.70, 0.05, 0.70)},
-    "turn_right":  {"flex": 3200, "acc": (0.70, 0.05, 0.70)},
+    "open_hand":   {"flex": [3200, 3200, 3200, 3200, 3200], "acc": (0.10, 0.05, 0.98)},
+    "closed_hand": {"flex": [3900, 3900, 3900, 3900, 3900], "acc": (0.10, 0.05, 0.98)},
+    "turn_left":   {"flex": [3200, 3200, 3200, 3200, 3200], "acc": (-0.70, 0.05, 0.70)},
+    "turn_right":  {"flex": [3200, 3200, 3200, 3200, 3200], "acc": (0.70, 0.05, 0.70)},
 }
 
 
@@ -22,7 +22,7 @@ def make_sample(gesture: str, dt: int) -> dict:
     p = PROFILES[gesture]
     return {
         "dt": dt,
-        "f": [int(p["flex"] + random.gauss(0, 25)) for _ in range(5)],
+        "f": [max(0, min(4095, int(base + random.gauss(0, 25)))) for base in p["flex"]],
         "a": [round(v + random.gauss(0, 0.02), 3) for v in p["acc"]],
         "g": [round(random.gauss(0, 0.5), 2) for _ in range(3)],
     }

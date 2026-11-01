@@ -5,3 +5,5 @@ __pycache__/
 data/
 *.pem
 .pytest_cache/
+backend/models/
+*.joblib
