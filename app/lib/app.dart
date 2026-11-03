@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'features/live/live_screen.dart';
 
+import 'features/mappings/mappings_screen.dart';
+
 class SmartGloveApp extends StatelessWidget {
   const SmartGloveApp({super.key});
 
@@ -23,9 +25,9 @@ class HomeShell extends StatefulWidget {
 class _HomeShellState extends State<HomeShell> {
   int _index = 0;
 
-  static const _pages = <Widget>[
+    static const _pages = <Widget>[
     LiveScreen(),
-    _ComingSoon('Gesture mappings'),
+    MappingsScreen(),
     _ComingSoon('Command history'),
   ];
 
