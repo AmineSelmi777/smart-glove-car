@@ -4,6 +4,8 @@ import 'features/live/live_screen.dart';
 
 import 'features/mappings/mappings_screen.dart';
 
+import 'features/history/history_screen.dart';
+
 class SmartGloveApp extends StatelessWidget {
   const SmartGloveApp({super.key});
 
@@ -25,10 +27,10 @@ class HomeShell extends StatefulWidget {
 class _HomeShellState extends State<HomeShell> {
   int _index = 0;
 
-    static const _pages = <Widget>[
+      static const _pages = <Widget>[
     LiveScreen(),
     MappingsScreen(),
-    _ComingSoon('Command history'),
+    HistoryScreen(),
   ];
 
   @override
@@ -43,16 +45,5 @@ class _HomeShellState extends State<HomeShell> {
             NavigationDestination(icon: Icon(Icons.history), label: 'History'),
           ],
         ),
-      );
-}
-
-class _ComingSoon extends StatelessWidget {
-  const _ComingSoon(this.title);
-  final String title;
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: Text(title)),
-        body: const Center(child: Text('Coming soon')),
       );
 }
