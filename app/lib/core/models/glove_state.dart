@@ -1,3 +1,4 @@
+import 'control_mode.dart';
 import 'gesture.dart';
 
 class GloveState {
@@ -9,6 +10,7 @@ class GloveState {
   final CarCommand command;
   final bool online;
   final int? batteryPct;
+  final ControlMode mode; // who produced the command
 
   const GloveState({
     required this.ts,
@@ -19,6 +21,7 @@ class GloveState {
     required this.command,
     this.online = true,
     this.batteryPct,
+    this.mode = ControlMode.gesture,
   });
 
   factory GloveState.fromJson(Map<String, dynamic> j) => GloveState(
@@ -30,5 +33,6 @@ class GloveState {
         command: CarCommand.fromWire(j['command'] as String),
         online: j['online'] as bool? ?? true,
         batteryPct: j['battery_pct'] as int?,
+        mode: ControlMode.fromWire(j['mode'] as String? ?? 'gesture'),
       );
 }

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../core/gesture_ui.dart';
 import '../../core/models/command_record.dart';
+import '../../core/models/control_mode.dart';
 import '../../core/models/gesture.dart';
 import '../../core/models/glove_state.dart';
 import '../../state/glove_controller.dart';
@@ -68,8 +69,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ? const Center(child: Text('No commands yet'))
                 : ListView.separated(
                     itemCount: records.length,
-                    separatorBuilder: (_, __) => const Divider(height: 1),
-                    itemBuilder: (_, i) => _RecordTile(records[i]),
+                    separatorBuilder: (context, index) => const Divider(height: 1),
+                    itemBuilder: (context, i) => _RecordTile(records[i]),
                   ),
           ),
         ],
@@ -154,13 +155,19 @@ class _RecordTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pct = (r.confidence * 100).round();
+    final manual = r.mode == ControlMode.manual;
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: r.command.color.shade100,
-        child: Icon(r.gesture.icon, color: r.command.color.shade800),
+        child: Icon(
+          manual ? Icons.gamepad_outlined : r.gesture.icon,
+          color: r.command.color.shade800,
+        ),
       ),
       title: Text(r.command.label),
-      subtitle: Text('${r.gesture.label} · $pct % · speed ${r.speed}'),
+      subtitle: Text(manual
+          ? 'Manual · speed ${r.speed}'
+          : '${r.gesture.label} · $pct % · speed ${r.speed}'),
       trailing: Text(_hms(r.ts)),
     );
   }

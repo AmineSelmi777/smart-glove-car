@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:smart_glove_app/core/models/control_mode.dart';
 import 'package:smart_glove_app/core/models/gesture.dart';
 import 'package:smart_glove_app/core/models/glove_config.dart';
 import 'package:smart_glove_app/core/models/glove_state.dart';
@@ -18,6 +19,10 @@ class FakeSource implements GloveSource {
   Future<void> stop() async {}
   @override
   Future<void> updateConfig(GloveConfig config) async {}
+  @override
+  Future<void> setMode(ControlMode mode) async {}
+  @override
+  Future<void> sendManual(CarCommand command, int speed) async {}
 }
 
 GloveState st(CarCommand cmd) => GloveState(

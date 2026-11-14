@@ -6,6 +6,7 @@ import 'data/config_store.dart';
 import 'data/mock_glove_source.dart';
 import 'state/config_controller.dart';
 import 'state/glove_controller.dart';
+import 'state/manual_controller.dart';
 
 void main() {
   final source = MockGloveSource();
@@ -16,6 +17,7 @@ void main() {
         ChangeNotifierProvider(
           create: (_) => ConfigController(ConfigStore(), source)..load(),
         ),
+        ChangeNotifierProvider(create: (_) => ManualController(source)),
       ],
       child: const SmartGloveApp(),
     ),

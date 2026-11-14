@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 import '../core/models/command_record.dart';
+import '../core/models/control_mode.dart';
 import '../core/models/gesture.dart';
 import '../core/models/glove_state.dart';
 import '../data/glove_source.dart';
@@ -21,8 +22,9 @@ class GloveController extends ChangeNotifier {
 
   GloveState? state;
   final List<GloveState> recent = []; // last 100 states, used by the chart
-  final List<CommandRecord> history = []; // newest first, command changes only
+  final List<CommandRecord> history = []; // newest first, command or mode changes only
   CarCommand? _lastCommand;
+  ControlMode? _lastMode;
 
   void _onState(GloveState s) {
     state = s;
@@ -30,8 +32,9 @@ class GloveController extends ChangeNotifier {
     recent.add(s);
     if (recent.length > maxRecent) recent.removeAt(0);
 
-    if (s.command != _lastCommand) {
+    if (s.command != _lastCommand || s.mode != _lastMode) {
       _lastCommand = s.command;
+      _lastMode = s.mode;
       history.insert(0, CommandRecord.fromState(s));
       if (history.length > maxHistory) history.removeLast();
     }
@@ -40,7 +43,8 @@ class GloveController extends ChangeNotifier {
 
   void clearHistory() {
     history.clear();
-    _lastCommand = null; // the current command is logged again on the next state
+    _lastCommand = null;
+    _lastMode = null; // the current state is logged again on the next update
     notifyListeners();
   }
 
