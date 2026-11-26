@@ -12,7 +12,7 @@ def build_dataset(data_dir: Path = DATA_DIR, window: int = WINDOW, step: int = S
                   median_n: int = MEDIAN_N, augment=AUGMENT):
     """CSV (timestamp, flex, ax..gz, label) -> X, y, groups (groups = one session = one file).
     `augment` adds one noisy copy of every session per noise level, so the model learns to
-    tolerate noisier hands than the ones it was recorded on."""
+    tolerate noisier hands than the ones it was recorded on.""" 
     files = sorted(Path(data_dir).rglob("*.csv"))
     if not files:
         raise SystemExit(f"No CSV found in {data_dir}")

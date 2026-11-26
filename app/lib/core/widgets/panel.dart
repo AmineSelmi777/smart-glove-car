@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-/// Flat bordered section used by the dashboard.
+import '../theme/axis_colors.dart';
+
+/// Section with a header, like the web dashboard panels.
 class Panel extends StatelessWidget {
   const Panel({
     super.key,
     required this.title,
     required this.child,
     this.trailing,
-    this.padding = const EdgeInsets.all(20),
+    this.padding = const EdgeInsets.all(16),
   });
 
   final String title;
@@ -17,35 +19,32 @@ class Panel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
+    final c = context.ax;
     return Container(
       decoration: BoxDecoration(
-        color: cs.surface,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: cs.outlineVariant),
+        color: c.surface,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: c.line),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 14, 16, 12),
+            padding: const EdgeInsets.fromLTRB(16, 12, 12, 10),
             child: Row(
               children: [
                 Expanded(
                   child: Text(
-                    title.toUpperCase(),
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          letterSpacing: 1.0,
-                          fontWeight: FontWeight.w600,
-                          color: cs.onSurfaceVariant,
-                        ),
+                    title,
+                    style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600),
                   ),
                 ),
-                if (trailing != null) trailing!,
+                ?trailing,
               ],
             ),
           ),
-          Divider(height: 1, color: cs.outlineVariant),
+          Divider(height: 1, color: c.line),
           Padding(padding: padding, child: child),
         ],
       ),
